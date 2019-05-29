@@ -5,3 +5,6 @@ authors = ["ice_iix <ice_ix@protonmail.ch>"]
 edition = "2018"
 
 [dependencies]
+log = { version = "0.4.6", features = ["std"] }
+stdweb = "0.4.17"
+hex = "0.3.2"
