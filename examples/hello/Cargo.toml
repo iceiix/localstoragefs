@@ -1,0 +1,11 @@
+[package]
+name = "hello"
+version = "0.1.0"
+authors = ["ice_iix <ice_ix@protonmail.ch>"]
+edition = "2018"
+
+[dependencies]
+localstoragefs = { path = "../.." }
+log = { version = "0.4.6", features = ["std"] }
+cfg-if = "0.1.9"
+web-sys = { version = "0.3.22", features = [ "console" ]}
