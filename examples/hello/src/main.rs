@@ -4,7 +4,7 @@ use cfg_if::cfg_if;
 
 cfg_if! {
     if #[cfg(target_arch = "wasm32")] {
-        use std_or_web::fs;
+        use localstoragefs::fs;
     } else {
         use std::fs;
     }
