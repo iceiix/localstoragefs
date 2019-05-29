@@ -1,6 +1,7 @@
 use std::io::{Read, Write};
 use log::info;
 use cfg_if::cfg_if;
+use web_sys;
 
 cfg_if! {
     if #[cfg(target_arch = "wasm32")] {
@@ -15,6 +16,15 @@ impl log::Log for Logger {
     fn enabled(&self, _: &log::Metadata) -> bool { true }
     fn flush(&self) { }
 
+    #[cfg(target_arch = "wasm32")]
+    fn log(&self, record: &log::Record) {
+        let s = format!("{}", record.args());
+        let value = &wasm_bindgen::JsValue::from_str(&s);
+        web_sys::console::info_1(value);
+    }
+
+
+    #[cfg(not(target_arch = "wasm32"))]
     fn log(&self, record: &log::Record) {
         println!("{}", record.args());
     }
