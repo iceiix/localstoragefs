@@ -1,12 +1,12 @@
 use std::io::{Read, Write};
 use log::info;
 use cfg_if::cfg_if;
-#[macro_use]
-extern crate stdweb;
 
 cfg_if! {
     if #[cfg(target_arch = "wasm32")] {
         use localstoragefs::fs;
+        #[macro_use]
+        extern crate stdweb;
     } else {
         use std::fs;
     }
