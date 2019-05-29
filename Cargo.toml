@@ -5,7 +5,7 @@ authors = ["ice_iix <ice_ix@protonmail.ch>"]
 edition = "2018"
 description = "web-based replacement for std::fs using localStorage"
 repository = "https://github.com/iceiix/localstoragefs"
-license = "(MIT OR Apache-2.0)"
+license = "Apache-2.0/MIT"
 
 [dependencies]
 stdweb = "0.4.17"
