@@ -1,4 +1,4 @@
-use log::info;
+use log::trace;
 use std::io::{Result, Read, Write};
 use std::path::Path;
 use std::convert::AsRef;
@@ -13,7 +13,7 @@ pub struct File {
 impl File {
     pub fn open<P: AsRef<Path>>(path: P) -> Result<File> {
         let path: &str = path.as_ref().to_str().unwrap();
-        info!("fs open {:?}", path);
+        trace!("fs open {:?}", path);
 
         if !window().local_storage().contains_key(path) {
             Err(std::io::Error::from_raw_os_error(1))
@@ -23,7 +23,7 @@ impl File {
     }
     pub fn create<P: AsRef<Path>>(path: P) -> Result<File> {
         let path: &str = path.as_ref().to_str().unwrap();
-        info!("fs create {:?}", path);
+        trace!("fs create {:?}", path);
 
         match window().local_storage().insert(path, "") {
             Ok(_) => Ok(File { path: path.to_string(), offset: 0 }),
@@ -37,21 +37,21 @@ impl Read for File {
         if let Some(string) = window().local_storage().get(&self.path) {
             match hex::decode(&string) {
                 Ok(data) => {
-                    info!("self.offset = {}", self.offset);
-                    info!("buf.len() = {}", buf.len());
+                    trace!("self.offset = {}", self.offset);
+                    trace!("buf.len() = {}", buf.len());
 
                     let mut end = self.offset + buf.len();
                     if end > data.len() {
                         end = data.len();
                     }
-                    info!("data.len() = {}", data.len());
-                    info!("end = {}", end);
+                    trace!("data.len() = {}", data.len());
+                    trace!("end = {}", end);
 
-                    info!("data = {:?}", data);
+                    trace!("data = {:?}", data);
 
                     let bytes = &data[self.offset..end];
 
-                    info!("bytes = {:?}", bytes);
+                    trace!("bytes = {:?}", bytes);
                     buf[..bytes.len()].copy_from_slice(&bytes);
                     self.offset = end;
                     Ok(bytes.len())
