@@ -16,15 +16,16 @@ cfg_if! {
 fn main() {
     init_logging::init_logging();
 
-    info!("creating");
-    let mut f = fs::File::create("hello.txt").unwrap();
-    info!("writing");
-    f.write_all(b"Hello, world!").unwrap();
-
     info!("opening");
-    let mut g = fs::File::open("hello.txt").unwrap();
-    let mut contents = String::new();
-    info!("reading");
-    g.read_to_string(&mut contents).unwrap();
-    info!("read data = {:?}", contents);
+    if let Ok(mut g) = fs::File::open("hello.txt") {
+        let mut contents = String::new();
+        info!("reading");
+        g.read_to_string(&mut contents).unwrap();
+        info!("read data = {:?}", contents);
+    } else {
+        info!("creating");
+        let mut f = fs::File::create("hello.txt").unwrap();
+        info!("writing");
+        f.write_all(b"Hello, world!").unwrap();
+    }
 }
